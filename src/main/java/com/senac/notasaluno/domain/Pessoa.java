@@ -3,20 +3,32 @@ package com.senac.notasaluno.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+
 
 /**
  * As anotações do hibernate serão do javax.persistence
  * A anotação @Entity é utilizada para definir a classe como uma entidade(persistida) no banco
  * A anotação @Entity pode ter parametros passados como o nome da tabela, é necessário
  * adicionar () com o valor " name= ", como no exemplo @Entity(name="tb_pessoa")
+ *  -- Anotaçoes para herença na superclass (Classe mãe) -- 
+ *  @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS) - Define qual a estratégia de 
+ *  mapeamento da herança será utilizada
+ *  <strong> Um ponto importante </strong> A utilização da palavara-chave abstract, para que na 
+ *  hora da criação do banco o HIBERNATE nao crie uma tabaela com os atributos da classe Pessoa
+ *  @MappedSuperclass - Define o mapeamento de herança concreta. Quando utilizado, deve-se por 
+ * somente ele (removendo o @Entity  e @Inheritance
+ * 
+ * Palavra-chave abstract
+ * é sempre bom utilizar essa Keyword nas superclasses para que elas não sejam instanciadas
+ *  e persisteidas no banco pelo hebernate
  * */
-@Entity
-public class Pessoa implements Serializable {
+@MappedSuperclass  
+public abstract class Pessoa implements Serializable {
 
 	/**
 	 * A anotação @Transient é utilizada para dizermos ao hibernate que aquele atributo não 
